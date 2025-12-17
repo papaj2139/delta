@@ -8,3 +8,9 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
+    - scheme: paper
+      primary: indigo
+      accent: pink
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
