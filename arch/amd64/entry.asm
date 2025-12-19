@@ -8,12 +8,16 @@ section .text.entry
 
 global _start
 
+extern main
+
 _start:
     ;clear direction flag
     cld
 
     ;set up initial kernel stack
     lea rsp, [rel kernel_stack_top]
+
+    call main
 
 .halt:
     cli

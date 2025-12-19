@@ -6,19 +6,20 @@ CC := gcc
 NASM := nasm
 LD := ld
 
-CFLAGS := -std=c11 -ffreestanding -fno-stack-protector -fno-pic \
+CFLAGS := -Ilib -I. -std=c11 -ffreestanding -fno-stack-protector -fno-pic -m64 -mcmodel=kernel \
           -mno-red-zone -mno-sse -mno-sse2 -mno-mmx \
           -Wall -Wextra -O2 -g
 
 NASMFLAGS := -f elf64 -g
 
-LDFLAGS := -nostdlib -static -T arch/$(ARCH)/linker.ld
+LDFLAGS := -nostdlib
+LDFLAGS += -T arch/$(ARCH)/linker.ld
 
 ASM_SRCS := arch/$(ARCH)/entry.asm
-C_SRCS :=
+C_SRCS := $(shell find -name '*.c')
 
 ASM_OBJS := $(ASM_SRCS:.asm=.o)
-C_OBJS := $(C_SRCS:.c=.o)
+C_OBJS := $(patsubst %.c,%.o,$(C_SRCS))
 OBJS := $(ASM_OBJS) $(C_OBJS)
 
 #build kernel
